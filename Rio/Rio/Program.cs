@@ -95,8 +95,8 @@ namespace Rio
 			try
 			{
 				TypedValue[] filtro = new TypedValue[] {
-					                                     new TypedValue((int)DxfCode.Start,     entidade), 
-					                                     new TypedValue((int)DxfCode.Operator,  "<or"), 
+					                   new TypedValue((int)DxfCode.Start,     entidade), 
+					                   new TypedValue((int)DxfCode.Operator,  "<or"), 
 														 new TypedValue((int)DxfCode.LayerName, "Piano"), 
 														 new TypedValue((int)DxfCode.LayerName, "Violin"),
 														 new TypedValue((int)DxfCode.LayerName, "Tuba"),
@@ -171,7 +171,7 @@ namespace Rio
 			DBObject obj = tr.GetObject(cir.ObjectId, OpenMode.ForRead);
 			return obj;
 		}
-        public DBObject Cria_Circulo (Transaction tr, Point3d centro, double raio, string nomelayer ) 
+    public DBObject Cria_Circulo (Transaction tr, Point3d centro, double raio, string nomelayer ) 
 		{
 			Circle cir = new Circle();
 			cir.Center = centro;
@@ -339,7 +339,7 @@ namespace Rio
 			    TypedValue[]          tvs  = new TypedValue[] { new TypedValue((int)DxfCode.LayerName, layer), };
 			    SelectionFilter       sset = new SelectionFilter(tvs);
 			    PromptSelectionResult psr  = edi.SelectAll( sset );
-	            return psr.Value;
+	        return psr.Value;
 		}
 		public ObjectId[]   FiltraObjetos(string entidade, string layer1)             
 		{
@@ -425,24 +425,24 @@ namespace Rio
                           }
                           return obje;
 		}
-        public string Texto_do_Objeto                (Entity enti)                    
+    public string Texto_do_Objeto                (Entity enti)                    
 		{
 			              string tipo  = enti.GetType().ToString();
-                          string texto = "-";
+                    string texto = "-";
 			              switch (tipo)
 			              {
                                      case "Autodesk.AutoCAD.DatabaseServices.DBText":         texto = Extrair_texto(enti); break;
                                      default:                                                 texto = "-";                 break;
-                          }
-                          return texto;
+                    }
+                    return texto;
 		}
-        public double Area_objeto                    (Entity enti)                    
-        {
+    public double Area_objeto                    (Entity enti)                    
+    {
               double area = 0.0;
               Curve ob = enti as Curve;
               string tipo = enti.GetType().ToString();
-			  switch (tipo)
-			         {
+		      	  switch (tipo)
+			        {
                             case "Autodesk.AutoCAD.DatabaseServices.DBPoint":    break;
                             case "Autodesk.AutoCAD.DatabaseServices.Line":       break;
                             case "Autodesk.AutoCAD.DatabaseServices.Circle":     area = ob.Area; break;
@@ -468,8 +468,8 @@ namespace Rio
                       coords = p1.X.ToString() + " " + p1.Y.ToString() + " " + p1.Z.ToString();
                       return coords;
         }
-		public string Extrair_pontos_pontos          (Entity enti)                    
-		{
+		    public string Extrair_pontos_pontos          (Entity enti)                    
+	    	{
 			    string coords = ""; 
 		        DBPoint pnt = enti as DBPoint;
 			    Point3d p1  = pnt.Position; 
@@ -479,24 +479,24 @@ namespace Rio
 		public string Extrair_pontos_linhas          (Entity enti)                    
 		{
 			    string coords = ""; 
-		        Line linha = enti as Line;
+		      Line linha = enti as Line;
 			    Point3d p1 = linha.StartPoint; 
-                Point3d p2 = linha.EndPoint; 
+          Point3d p2 = linha.EndPoint; 
 			    coords = p1.X.ToString() + " " + p1.Y.ToString() + " " + p1.Z.ToString() + " " + p2.X.ToString() + " " + p2.Y.ToString() + " " + p2.Z.ToString();
-		  	    return coords;
+		  	  return coords;
 		}
 		public string Extrair_pontos_circle          (Entity enti)                    
 		{
 			       string coords  = ""; 
-		           Circle circulo = enti as Circle;
+		         Circle circulo = enti as Circle;
 			       Point3d p1 = circulo.Center;
 			       coords = p1.X.ToString() + " " + p1.Y.ToString() + " " + p1.Z.ToString();
 			       return coords;
 		}
-        public string Extrair_pontos_bloco           (Entity enti)                    
+    public string Extrair_pontos_bloco           (Entity enti)                    
 		{
-			     string coords  = ""; 
-		           BlockReference bloco = enti as BlockReference;
+		   	     string coords  = ""; 
+		         BlockReference bloco = enti as BlockReference;
 			       Point3d        p1    = bloco.Position;
 			       coords         = p1.X.ToString() + " " + p1.Y.ToString() + " " + p1.Z.ToString();
 			       return coords;
@@ -504,11 +504,11 @@ namespace Rio
 		public string Extrair_pontos_poligonal2D     (Entity enti, double preci)                    
 		{
 			     string coords = ""; 
-		         Polyline poly2d = enti as Polyline; 
+		       Polyline poly2d = enti as Polyline; 
 			     double elevac = poly2d.Elevation;
-                 List<Point2d> Lp = new List<Point2d> { };
-                 for (int i = 0; i < poly2d.NumberOfVertices; i++)
-                 {
+           List<Point2d> Lp = new List<Point2d> { };
+           for (int i = 0; i < poly2d.NumberOfVertices; i++)
+               {
                          Point2d p1 = poly2d.GetPoint2dAt(i);
                          if (Lp.Count == 0)
                              Lp.Add(p1);
@@ -516,24 +516,24 @@ namespace Rio
                              { if (p1.GetDistanceTo(Lp.Last()) > preci)
                                   Lp.Add(p1);
                              }
-                 }
+                }
                  
-                 for (int i = 0; i < Lp.Count; i++)
-                 {
+                for (int i = 0; i < Lp.Count; i++)
+                {
                             Point2d p1 = Lp[i];
                             string vertice =  p1.X.ToString() + " " + p1.Y.ToString() + " " + elevac.ToString();
-				            if (!coords.Contains(vertice))
-				               {
-				                   coords = coords + " " + vertice;
-				               }
-                 }
-			  return coords;
+				                    if (!coords.Contains(vertice))
+				                    {
+				                        coords = coords + " " + vertice;
+				                    }
+                }
+		            return coords;
 		}
        
-        public string Extrair_pontos_poligonal3D     (Entity enti, Transaction tr, double preci )   
+    public string Extrair_pontos_poligonal3D     (Entity enti, Transaction tr, double preci )   
 		{
-			            string coords = ""; 
-   		                Polyline3d poly3d = enti as Polyline3d;
+			                  string coords = ""; 
+   		                  Polyline3d poly3d = enti as Polyline3d;
                         List<Point3d> Lp   = new List<Point3d> { };
                         List<double>  Lalt = new List<double> { };
                         foreach (ObjectId acObjIdVert in poly3d)
@@ -556,13 +556,13 @@ namespace Rio
                                           Point3d px = p1.Position;
                                           if (px.DistanceTo(Lp.Last()) > preci && !coords.Contains(vertice))
                                              {
-				                                 coords = coords + " " + vertice;
+				                                         coords = coords + " " + vertice;
                                                  Lp.Add(p1.Position);
                                              }
                                      }
                         }
-			      return coords;
-		}
+			                 return coords;
+		   }
      }
 
      public class Rio : Basicas
