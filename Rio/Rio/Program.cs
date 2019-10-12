@@ -1,5 +1,7 @@
-﻿using System;
+using System;
 using System.IO;
+using System.Net;
+using System.Net.Http;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Xsl;
 using System.Xml.Linq;
+using System.Reflection;
 
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
@@ -15,10 +18,12 @@ using Autodesk.AutoCAD.Runtime;
 using Autodesk.AutoCAD.Geometry;
 using Autodesk.AutoCAD.Colors;
 
+using OX = Microsoft.Office.Interop.Excel;
+
 namespace Rio
 {
-	public class Basicas
-	{
+     public class Basicas       
+	 {
 		private Document    _doc;
 		private Editor      _edi;
 		private Database    _db1;
@@ -31,25 +36,25 @@ namespace Rio
 		public Database    dbw  { get { return HostApplicationServices.WorkingDatabase; }                                                                         set { _db2 = value; } }
 		public Transaction tran { get { return _tran; }                                                                                                           set { _tran = value; } }
 
-		public double Str_Doble(string s) { return System.Convert.ToDouble(s); }
-		public long   Str_Int64(string s) { return System.Convert.ToInt64(s);  }
-		public int    Str_Int32(string s) { return System.Convert.ToInt32(s);  }
+		public double       Str_Doble (string s) { return System.Convert.ToDouble(s);}
+		public long         Str_Int64 (string s) { return System.Convert.ToInt64(s); }
+		public int          Str_Int32 (string s) { return System.Convert.ToInt32(s); }
 
-        public void       Mensaje   (string msg)                         
-            { 
-                               System.Windows.Forms.MessageBox.Show(msg);
-            }
-		public Point3d    PontoMedio(Point3d p1, Point3d p2)             
+        public void         Mensaje   (string m)
+        { 
+                            System.Windows.Forms.MessageBox.Show(m);
+        }
+        public Point3d      PontoMedio (Point3d p1, Point3d p2)            
 		{
 			double dis = p1.DistanceTo(p2);
 			return new Point3d((p1.X + p2.X) * 0.5, (p1.Y + p2.Y) * 0.5, (p1.Z + p2.Z) * 0.5);
 		}
-		public Point3d    PontoMedio(Point3d p1, Point3d p2, double fat) 
+        public Point3d      PontoMedio (Point3d p1, Point3d p2, double fat)
 		{
 			double dis = p1.DistanceTo(p2);
 			return new Point3d((p1.X + p2.X) * fat, (p1.Y + p2.Y) * fat, (p1.Z + p2.Z) * fat);
 		}
-		public double     Comprimento(Object curva)                      
+        public double       Comprimento(Object curva)                      
 		{
 			Curve elem = curva as Curve;
 			double comprimento = 0.0;
@@ -61,7 +66,7 @@ namespace Rio
 			return comprimento;
 		}
 
-		public ObjectId[] Captura_entidades(string entidade, bool msg )  
+		public ObjectId[]   Captura_entidades(string entidade, bool msg )  
 		{
 			ObjectId[]  objid = null;
 			SelectionSet sset = null;
@@ -82,7 +87,7 @@ namespace Rio
 			}
 			catch { return objid; }
 		}
-		public ObjectId[] Captura_Zonas    (string entidade, bool msg )  
+		public ObjectId[]   Captura_Zonas    (string entidade, bool msg )  
 		{
 			ObjectId[] objid = null;
 			SelectionSet sset = null;
@@ -110,41 +115,41 @@ namespace Rio
 			}
 			catch { return objid; }
 		}
-		public Entity     Captura_Ultima   ()                            
+		public Entity       Captura_Ultima   ()                            
 		{
-			Entity ent;
-			ObjectId objid = Autodesk.AutoCAD.Internal.Utils.EntLast();
-			if (!objid.IsNull && objid.IsValid)
-			{
-				ent = (Entity)objid.GetObject(OpenMode.ForWrite) as Entity;
-			}
-			else
-			{
-				ent = null;
-			}
-			return ent;
+                            Entity ent;
+                            ObjectId objid = Autodesk.AutoCAD.Internal.Utils.EntLast();
+                            if (!objid.IsNull && objid.IsValid)
+                               {
+                                       ent = (Entity)objid.GetObject(OpenMode.ForWrite) as Entity;
+                               }
+                               else
+                               {
+                                       ent = null;
+                               }
+                     return ent;
 		}
 
 		public List<double> Caixa(Entity ent, out double dx, out double dy, out double dz)
 		{
-			   List<double> bbox = new List<double> { };
-			   Extents3d bb = ent.GeometricExtents;
-			   Point3d   p1 = bb.MinPoint;
-			   Point3d   p2 = bb.MaxPoint;
-			   Point3d   p0 = PontoMedio(p1, p2);
-			   Vector3d  v1 = p1.GetAsVector();
-			   Vector3d  v2 = p2.GetAsVector();
-			   double  ang  = v1.GetAngleTo(v2) * (180 / Math.PI);
-               double  seno = System.Math.Sin(ang);
-               double  cose = System.Math.Cos(ang);
-               dx = p1.DistanceTo(p2) * cose; bbox.Add(dx);
-               dy = p1.DistanceTo(p2) * seno; bbox.Add(dy);
-               dz = 0.0; bbox.Add(dz);
-               return bbox;
+                            List<double> bbox = new List<double> { };
+                            Extents3d bb = ent.GeometricExtents;
+                            Point3d   p1 = bb.MinPoint;
+                            Point3d   p2 = bb.MaxPoint;
+                            Point3d   p0 = PontoMedio(p1, p2);
+                            Vector3d  v1 = p1.GetAsVector();
+                            Vector3d  v2 = p2.GetAsVector();
+                            double  ang  = v1.GetAngleTo(v2) * (180 / Math.PI);
+                            double  seno = System.Math.Sin(ang);
+                            double  cose = System.Math.Cos(ang);
+                                      dx = p1.DistanceTo(p2) * cose; bbox.Add(dx);
+                                      dy = p1.DistanceTo(p2) * seno; bbox.Add(dy);
+                                      dz = 0.0; bbox.Add(dz);
+                     return bbox;
 		}
 
 		// ----------------------------------------------------------------------------------------------------------------
-		public DBObject Cria_Esfera  (Transaction tr, Point3d centro, double raio, string nomelayer )      
+		public DBObject Cria_Esfera  (Transaction tr, Point3d centro, double raio, string nomelayer ) 
 		{
 			Matrix3d mat = new Matrix3d();
 			Solid3d esf = new Solid3d();
@@ -156,7 +161,7 @@ namespace Rio
 			esf.Layer = nomelayer;
 			return obj;
 		}
-		public DBObject Cria_Circulo (Transaction tr, Point3d centro, double raio )                        
+		public DBObject Cria_Circulo (Transaction tr, Point3d centro, double raio )                   
 		{
 			Circle cir = new Circle();
 			cir.Center = centro;
@@ -166,7 +171,7 @@ namespace Rio
 			DBObject obj = tr.GetObject(cir.ObjectId, OpenMode.ForRead);
 			return obj;
 		}
-        public DBObject Cria_Circulo (Transaction tr, Point3d centro, double raio, string nomelayer )      
+        public DBObject Cria_Circulo (Transaction tr, Point3d centro, double raio, string nomelayer ) 
 		{
 			Circle cir = new Circle();
 			cir.Center = centro;
@@ -177,7 +182,7 @@ namespace Rio
                   cir.Layer = nomelayer;
 			return obj;
 		}
-		public DBObject Cria_Texto   (Transaction tr, Point3d pto, string txt )                            
+		public DBObject Cria_Texto   (Transaction tr, Point3d pto, string txt )                       
 		{
 			Autodesk.AutoCAD.DatabaseServices.DBText tex = new Autodesk.AutoCAD.DatabaseServices.DBText();
 			tex.TextStyleId = dba.Textstyle;
@@ -191,7 +196,7 @@ namespace Rio
 			edi.UpdateScreen();
 			return obj;
 		}
-		public DBObject Cria_Hachura (Transaction tr, DBObject obj, double elev )                          
+		public DBObject Cria_Hachura (Transaction tr, DBObject obj, double elev )                     
 		{
 			Hatch Hachura = new Hatch();
 			NovaEntidad(tr, Hachura);
@@ -210,7 +215,7 @@ namespace Rio
 			edi.UpdateScreen();
 			return tr.GetObject(Hachura.ObjectId, OpenMode.ForRead);
 		}
-		public Entity   NovaEntidad  (Transaction tr, Entity  ent )                                        
+		public Entity   NovaEntidad  (Transaction tr, Entity  ent )                                   
 		{
                         BlockTableRecord btr = (BlockTableRecord)tr.GetObject(dba.CurrentSpaceId, OpenMode.ForWrite);
                         ObjectId obj = btr.AppendEntity(ent);
@@ -218,7 +223,7 @@ namespace Rio
                         return ent;
 		}
 
-        public void Faz_Offset (Polyline pl, Transaction tr, BlockTableRecord btr)   
+        public void         Faz_Offset (Polyline pl, Transaction tr, BlockTableRecord btr)            
         {
                     foreach (Entity ent in pl.GetOffsetCurves(0.025))
                     {
@@ -227,12 +232,12 @@ namespace Rio
                     }
         }
 
-		public ObjectId[] Prepara_Zonas   ( )                                        
+		public ObjectId[]   Prepara_Zonas   ( )                                       
 		{
 			ObjectId[] PoligonaisZonas = Captura_Zonas("LWPOLYLINE", true);
 			return PoligonaisZonas;
 		}
-		public string     Ponto_Dentro    ( Polyline poli, Point3d p0 )              
+		public string       Ponto_Dentro    ( Polyline poli, Point3d p0 )             
 		{
 			string puntoadentro = "-";
 			Point3d p1 = poli.GetPoint3dAt(0);
@@ -256,7 +261,7 @@ namespace Rio
 
 			return puntoadentro;
 		}
-		public double     AreaTriangulo   ( Point3d p1,    Point3d p2, Point3d p3 )  
+		public double       AreaTriangulo   ( Point3d p1,    Point3d p2, Point3d p3 ) 
 		{
 			double a = p1.DistanceTo(p2);
 			double b = p2.DistanceTo(p3);
@@ -265,7 +270,7 @@ namespace Rio
 			double area = Math.Sqrt(S * (S - a) * (S - b) * (S - c));
 			return area;
 		}
-		public Point3d    Seleccion_Ponto ( string msg )                             
+		public Point3d      Seleccion_Ponto ( string msg )                            
 		{
 			PromptPointOptions pop = new PromptPointOptions("\n" + msg);
 			PromptPointResult pnt = edi.GetPoint(pop);
@@ -275,7 +280,7 @@ namespace Rio
 				return new Point3d();
 		}
              
-		public int    Ingressar_Inteiro( string msg, int defaul)     
+		public int          Ingressar_Inteiro( string msg, int defaul)                
 		{
 			PromptIntegerResult numint;
 			PromptIntegerOptions inte = new PromptIntegerOptions("\n" + msg);
@@ -284,7 +289,7 @@ namespace Rio
 			numint = edi.GetInteger(inte);
 			return numint.Value;
 		}
-		public double Ingressar_Real   ( string msg, double defaul ) 
+		public double       Ingressar_Real   ( string msg, double defaul )            
 		{
 			PromptDoubleResult numreal;
 			PromptDoubleOptions real = new PromptDoubleOptions("\n" + msg);
@@ -293,7 +298,7 @@ namespace Rio
 			numreal = edi.GetDouble(real);
 			return numreal.Value;
 		}
-		public string Ingressar_Text   ( string msg, string defaul ) 
+		public string       Ingressar_Text   ( string msg, string defaul )            
 		{
 			PromptResult texto;
 			PromptStringOptions textoin = new PromptStringOptions("\n" + msg);
@@ -307,16 +312,16 @@ namespace Rio
 				return texto.StringResult;
 		}
 
-		public bool ParImp(int num)          { return num % 2   == 0; }  // Verifica se número é par ou impar       
-		public bool Modulo(int num, int mod) { return num % mod == 0; }  // Verifica indice modular do número       
-		public int  Congru(int num, int mod)                             // Retorna congruente modular do número 
+		public bool         ParImp(int num)          { return num % 2   == 0; }           // Verifica se número é par ou impar       
+		public bool         Modulo(int num, int mod) { return num % mod == 0; }           // Verifica indice modular do número       
+		public int          Congru(int num, int mod)                                  
 		{
-			int partes = (num / mod);
-			int modular = (num - (partes * mod));
-			return modular;
-		}
+                            int partes = (num / mod);
+                            int modular = (num - (partes * mod));
+                            return modular;
+		} // Retorna congruente modular do número 
 
-		public Entity Selecionar_Entidad (string msg )                             
+		public Entity       Selecionar_Entidad (string msg )                          
 		{
 			DBObject obj;
 			Entity ent;
@@ -328,16 +333,15 @@ namespace Rio
 				ent = obj as Entity;
 				return ent;
 			}
-		}
-				
-		public SelectionSet FiltrarLayer (string layer)                            
+		}	
+		public SelectionSet FiltrarLayer (string layer)                               
 		{
 			    TypedValue[]          tvs  = new TypedValue[] { new TypedValue((int)DxfCode.LayerName, layer), };
 			    SelectionFilter       sset = new SelectionFilter(tvs);
 			    PromptSelectionResult psr  = edi.SelectAll( sset );
 	            return psr.Value;
 		}
-		public ObjectId[]   FiltraObjetos(string entidade, string layer1)          
+		public ObjectId[]   FiltraObjetos(string entidade, string layer1)             
 		{
 			ObjectId[] objetos = null;
 			SelectionSet sset  = null;
@@ -358,7 +362,7 @@ namespace Rio
 			}
 			catch { return objetos; }
 		}
-		public ObjectId[]   Filtrar_Temas(string[] layer1)                         
+		public ObjectId[]   Filtrar_Temas(string[] layer1)                            
 		{
 			    ObjectId[] objetos        = null;
 			    SelectionSet sset         = null;
@@ -385,25 +389,25 @@ namespace Rio
 			catch { return objetos; }
 		}
 		
-		public string Extrair_Coordenadas            (Entity enti, Transaction tr) 
+		public string Extrair_Coordenadas            (Entity enti, Transaction tr)    
 		{
                           string t = enti.GetType().ToString();
                           string p = "-";
                           switch (t)
                           {
-                                     case "Autodesk.AutoCAD.DatabaseServices.DBPoint":        p = Extrair_pontos_pontos(enti);              break;
-                                     case "Autodesk.AutoCAD.DatabaseServices.Line":           p = Extrair_pontos_linhas(enti);              break;
-                                     case "Autodesk.AutoCAD.DatabaseServices.Circle":         p = Extrair_pontos_circle(enti);              break;
-                                     case "Autodesk.AutoCAD.DatabaseServices.Polyline":       p = Extrair_pontos_poligonal2D(enti);         break;
-                                     case "Autodesk.AutoCAD.DatabaseServices.Polyline2d":     p = Extrair_pontos_poligonal2D(enti);         break;
-                                     case "Autodesk.AutoCAD.DatabaseServices.Polyline3d":     p = Extrair_pontos_poligonal3D_Max(enti, tr); break;
-                                     case "Autodesk.AutoCAD.DatabaseServices.BlockReference": p = Extrair_pontos_bloco(enti);               break;
-                                     case "Autodesk.AutoCAD.DatabaseServices.DBText":         p = Extrair_Pontos_texto(enti);               break;
-                                     default:                                                 p = "-";                                      break;
+                                     case "Autodesk.AutoCAD.DatabaseServices.DBPoint":        p = Extrair_pontos_pontos(enti);               break;
+                                     case "Autodesk.AutoCAD.DatabaseServices.Line":           p = Extrair_pontos_linhas(enti);               break;
+                                     case "Autodesk.AutoCAD.DatabaseServices.Circle":         p = Extrair_pontos_circle(enti);               break;
+                                     case "Autodesk.AutoCAD.DatabaseServices.Polyline":       p = Extrair_pontos_poligonal2D(enti, 0.1);     break;
+                                     case "Autodesk.AutoCAD.DatabaseServices.Polyline2d":     p = Extrair_pontos_poligonal2D(enti, 0.1);     break;
+                                     case "Autodesk.AutoCAD.DatabaseServices.Polyline3d":     p = Extrair_pontos_poligonal3D(enti, tr, 0.1); break;
+                                     case "Autodesk.AutoCAD.DatabaseServices.BlockReference": p = Extrair_pontos_bloco(enti);                break;
+                                     case "Autodesk.AutoCAD.DatabaseServices.DBText":         p = Extrair_Pontos_texto(enti);                break;
+                                     default:                                                 p = "-";                                       break;
                           }
                           return p;
 		}  
-        public string Tipo_de_Objeto                 (Entity enti)                 
+        public string Tipo_de_Objeto                 (Entity enti)                    
 		{ 
 			              string  tipo  = enti.GetType().ToString();
                           string  obje  = "Desconocido";
@@ -421,7 +425,7 @@ namespace Rio
                           }
                           return obje;
 		}
-        public string Texto_do_Objeto                (Entity enti)                 
+        public string Texto_do_Objeto                (Entity enti)                    
 		{
 			              string tipo  = enti.GetType().ToString();
                           string texto = "-";
@@ -432,7 +436,7 @@ namespace Rio
                           }
                           return texto;
 		}
-        public double Area_objeto                    (Entity enti)                 
+        public double Area_objeto                    (Entity enti)                    
         {
               double area = 0.0;
               Curve ob = enti as Curve;
@@ -449,15 +453,14 @@ namespace Rio
 			         }
                return area;
         }
-
-        public string Extrair_texto                  (Entity enti)                 
+        public string Extrair_texto                  (Entity enti)                    
         {
                       string texto = "-";
                       DBText txt   = enti as DBText;
                       texto        = txt.TextString;
                       return texto;
         }
-        public string Extrair_Pontos_texto           (Entity enti)                 
+        public string Extrair_Pontos_texto           (Entity enti)                    
         {
                       string coords = "-";
                       DBText entxt = enti as DBText;
@@ -465,7 +468,7 @@ namespace Rio
                       coords = p1.X.ToString() + " " + p1.Y.ToString() + " " + p1.Z.ToString();
                       return coords;
         }
-		public string Extrair_pontos_pontos          (Entity enti)                 
+		public string Extrair_pontos_pontos          (Entity enti)                    
 		{
 			    string coords = ""; 
 		        DBPoint pnt = enti as DBPoint;
@@ -473,7 +476,7 @@ namespace Rio
 			    coords = p1.X.ToString() + " " + p1.Y.ToString() + " " + p1.Z.ToString();
 			    return coords;
 		}
-		public string Extrair_pontos_linhas          (Entity enti)                 
+		public string Extrair_pontos_linhas          (Entity enti)                    
 		{
 			    string coords = ""; 
 		        Line linha = enti as Line;
@@ -482,79 +485,88 @@ namespace Rio
 			    coords = p1.X.ToString() + " " + p1.Y.ToString() + " " + p1.Z.ToString() + " " + p2.X.ToString() + " " + p2.Y.ToString() + " " + p2.Z.ToString();
 		  	    return coords;
 		}
-		public string Extrair_pontos_circle          (Entity enti)                 
+		public string Extrair_pontos_circle          (Entity enti)                    
 		{
-			     string coords  = ""; 
+			       string coords  = ""; 
 		           Circle circulo = enti as Circle;
-			     Point3d p1 = circulo.Center;
-			     coords = p1.X.ToString() + " " + p1.Y.ToString() + " " + p1.Z.ToString();
-			     return coords;
+			       Point3d p1 = circulo.Center;
+			       coords = p1.X.ToString() + " " + p1.Y.ToString() + " " + p1.Z.ToString();
+			       return coords;
 		}
-        public string Extrair_pontos_bloco           (Entity enti)                 
+        public string Extrair_pontos_bloco           (Entity enti)                    
 		{
 			     string coords  = ""; 
 		           BlockReference bloco = enti as BlockReference;
-			     Point3d        p1    = bloco.Position;
-			     coords         = p1.X.ToString() + " " + p1.Y.ToString() + " " + p1.Z.ToString();
-			     return coords;
+			       Point3d        p1    = bloco.Position;
+			       coords         = p1.X.ToString() + " " + p1.Y.ToString() + " " + p1.Z.ToString();
+			       return coords;
 		}
-		public string Extrair_pontos_poligonal2D     (Entity enti)                 
+		public string Extrair_pontos_poligonal2D     (Entity enti, double preci)                    
 		{
 			     string coords = ""; 
 		         Polyline poly2d = enti as Polyline; 
 			     double elevac = poly2d.Elevation;
+                 List<Point2d> Lp = new List<Point2d> { };
                  for (int i = 0; i < poly2d.NumberOfVertices; i++)
-                     {
-                            Point2d p1 = poly2d.GetPoint2dAt(i);
-				            string vertice =  p1.X.ToString() + " " + p1.Y.ToString() + " " + elevac.ToString();
+                 {
+                         Point2d p1 = poly2d.GetPoint2dAt(i);
+                         if (Lp.Count == 0)
+                             Lp.Add(p1);
+                         else
+                             { if (p1.GetDistanceTo(Lp.Last()) > preci)
+                                  Lp.Add(p1);
+                             }
+                 }
+                 
+                 for (int i = 0; i < Lp.Count; i++)
+                 {
+                            Point2d p1 = Lp[i];
+                            string vertice =  p1.X.ToString() + " " + p1.Y.ToString() + " " + elevac.ToString();
 				            if (!coords.Contains(vertice))
 				               {
-				                   coords = coords + vertice + " ";
+				                   coords = coords + " " + vertice;
 				               }
-                     }
+                 }
 			  return coords;
 		}
-		public string Extrair_pontos_poligonal3D     (Entity enti, Transaction tr) 
+       
+        public string Extrair_pontos_poligonal3D     (Entity enti, Transaction tr, double preci )   
 		{
-			      string coords = ""; 
-   		            Polyline3d poly3d = enti as Polyline3d; 
+			            string coords = ""; 
+   		                Polyline3d poly3d = enti as Polyline3d;
+                        List<Point3d> Lp   = new List<Point3d> { };
+                        List<double>  Lalt = new List<double> { };
                         foreach (ObjectId acObjIdVert in poly3d)
                         {
-                               PolylineVertex3d p1 = tr.GetObject(acObjIdVert, OpenMode.ForRead) as PolylineVertex3d;
-					 string vertice =   p1.Position.X.ToString() + " " + p1.Position.Y.ToString() + " " + p1.Position.Z.ToString();
-				       if (!coords.Contains(vertice))
-				          {
-				                    coords = coords + vertice + " ";
-					    }
+                              PolylineVertex3d p1 = tr.GetObject(acObjIdVert, OpenMode.ForRead) as PolylineVertex3d;
+                              Lalt.Add(p1.Position.Z);
+                        }
+                        string alturamax = Lalt.Max().ToString();
+            
+                        foreach (ObjectId acObjIdVert in poly3d)
+                        {
+                                 PolylineVertex3d p1 = tr.GetObject(acObjIdVert, OpenMode.ForRead) as PolylineVertex3d;
+                                 string vertice = p1.Position.X.ToString() + " " + p1.Position.Y.ToString() + " " + alturamax;
+                                 if   (Lp.Count == 0)
+                                      {
+                                          coords = coords + " " + vertice;
+                                          Lp.Add(p1.Position);
+                                      }
+                                 else {
+                                          Point3d px = p1.Position;
+                                          if (px.DistanceTo(Lp.Last()) > preci && !coords.Contains(vertice))
+                                             {
+				                                 coords = coords + " " + vertice;
+                                                 Lp.Add(p1.Position);
+                                             }
+                                     }
                         }
 			      return coords;
 		}
-        public string Extrair_pontos_poligonal3D_Max (Entity enti, Transaction tr) 
-		{
-			      string                 coords = ""; 
-   		            Polyline3d             poly3d = enti as Polyline3d; 
-                        List<PolylineVertex3d> listav = new List<PolylineVertex3d> { };
-                        foreach (ObjectId acObjIdVert in poly3d)
-                        {
-                               PolylineVertex3d p1 = tr.GetObject(acObjIdVert, OpenMode.ForRead) as PolylineVertex3d;
-                               listav.Add(p1);
-                        }
-                        listav.OrderBy(p => p.Position.Z); 
-                        double zmax = listav.Last().Position.Z;
-                        foreach (var p in listav)
-                        {
-					 string vertice =   p.Position.X.ToString() + " " + p.Position.Y.ToString() + " " + zmax.ToString();
-				       if (!coords.Contains(vertice))
-				       {
-				                    coords = coords + vertice + " ";
-					 }
-                        }
-                        return coords;
-		}
-	}
+     }
 
-      public class Rio : Basicas
-      {
+     public class Rio : Basicas
+     {
         private List<string[]> barrial;  public List<string[]> Barrial { get { return barrial; } set { barrial = value; } }
         private List<string[]> tematic;  public List<string[]> Tematic { get { return tematic; } set { tematic = value; } }
 
@@ -627,7 +639,7 @@ namespace Rio
                                           tr.Commit();
                                    }
         }
-        public void Cria_Poli_3D ( List<Point3d> Lpontos, string layer , bool fecha)             
+        public void Cria_Poli_3D ( List<Point3d> Lpontos, string layer , bool fecha) 
         {
                     Document acDoc = Application.DocumentManager.MdiActiveDocument;
                     Database dbase = acDoc.Database;
@@ -656,7 +668,7 @@ namespace Rio
                                     Poly3d.Layer = layer;
                            }
                            tr.Commit();
-                      }
+                    }
         }
         public void Cria_Camada  ( string layer, short cor)                          
         {
@@ -686,8 +698,11 @@ namespace Rio
                   }
          }
 
+// ----------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------
         [CommandMethod("RIOIN")]
-        public void Rio_IN()   
+        public void     Rio_IN()                                                                                        
         {
                             try
                                     {
@@ -704,7 +719,6 @@ namespace Rio
                             finally { }
                             Mensaje( "Temas inseridos." ); 
         }
-
         public void     Rio_Selecion_Tema    ( out string Pasta, out List<string> Temario, out List<string> Barrios)    
         {
                           Pasta  = "D:\\JLMenegotto\\Academia\\04_Pesquisa\\MRJ\\MRJ_ORIG";
@@ -753,7 +767,7 @@ namespace Rio
                                          if (elemento.HasAttribute("Texto"))
                                             { texto  = elemento.GetAttributeNode("Texto").Value; }
 
-                                         string[] coords = Rio_Separar_Coordena(coord);
+                                         string[] coords = Rio_Separar_Coordena(coord.Substring(1));
 
                                          List<Point3d> Lpontos = new List<Point3d> { };
                                          for (int k = 0; k < (coords.Length / 3); k++)
@@ -769,13 +783,36 @@ namespace Rio
                                     }
                            } 
         }
-
         public void     Rio_Desenhar_Objetos ( string objeto, string tema, List<Point3d> Lpnts, string texto)           
         {
                      bool fecha = true;
                      switch (tema)
                      {
+                                          case "338": fecha = false; break;
+                                          case "339": fecha = false; break;
                                           case "500": fecha = false; break;
+                                          case "502": fecha = false; break;
+                                          case "503": fecha = false; break;
+                                          case "504": fecha = false; break;
+                                          case "505": fecha = false; break;
+                                          case "506": fecha = false; break;
+                                          case "507": fecha = false; break;
+                                          case "508": fecha = false; break;
+                                          case "562": fecha = false; break;
+                                          case "572": fecha = false; break;
+                                          case "650": fecha = false; break;
+                                          case "651": fecha = false; break;
+                                          case "652": fecha = false; break;
+                                          case "653": fecha = false; break;
+                                          case "654": fecha = false; break;
+                                          case "655": fecha = false; break;
+                                          case "656": fecha = false; break;
+                                          case "657": fecha = false; break;
+                                          case "658": fecha = false; break;
+                                          case "671": fecha = false; break;
+                                          case "672": fecha = false; break;
+                                          case "696": fecha = false; break;
+                                          case "714": fecha = false; break;
                                           case "720": fecha = false; break;
                                           case "721": fecha = false; break;
                                           case "722": fecha = false; break;
@@ -807,6 +844,9 @@ namespace Rio
                             return coord.Split(separa);
         }
 
+// ----------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------------
         [CommandMethod("RIOOUT")]
         public void RIO_OUT()   
         {
@@ -835,9 +875,8 @@ namespace Rio
                             catch   { }
                             finally { }
                     Mensaje("Temas Extraidos e Inseridos.");
-
-
         }
+
         [CommandMethod("RIOOUT_IN")]
         public void RIOOUTIN()  
         {
@@ -920,14 +959,14 @@ namespace Rio
                                     string texto = Texto_do_Objeto(entid);
                                     string layer = entid.Layer.Substring(0, 3);
                                     string coord = Extrair_Coordenadas(entid, tr);
-                                    
                                     for (int t = 0; t < Temas.Count; t++)
                                     {
-                                             XmlWriter XML =  LXML[t];  //Arquivo XML do Tema
-                                             string   Tema = Temas[t];
+                                             XmlWriter XML   =  LXML[t];  //Arquivo XML do Tema
+                                             string   bair   = ArqDWG.Substring(0, ArqDWG.Length - 4);
+                                             string   Tema   = Temas[t];
                                              if (tpobj != "Desconocido" && layer.Contains(Tema))
                                                 {
-                                                      Rio_Elem_Elemen ( XML , tpobj , coord , texto); 
+                                                      Rio_Elem_Elemen ( XML , tpobj , coord , texto, Tema , bair); 
                                                 }
                                     }
                                } 
@@ -962,12 +1001,14 @@ namespace Rio
                                  XML.WriteAttributeString("Bairro_Zona",    dados[4]);
                                  XML.WriteAttributeString("Bairro_Codigo",  dados[5]);
         }
-        public void         Rio_Elem_Elemen   ( XmlWriter XML,  string obtp, string coor, string txt) 
+        public void         Rio_Elem_Elemen   ( XmlWriter XML,  string obtp, string coor, string txt, string tema, string bairr) 
         {
                             XML.WriteStartElement("Elemento");
-                                                        XML.WriteAttributeString("Objeto", obtp);
-                                                        XML.WriteAttributeString("Local" , coor);
-                                   if (obtp == "Texto") XML.WriteAttributeString("Texto", txt);
+                                                        XML.WriteAttributeString("Tema"   , tema);
+                                                        XML.WriteAttributeString("Bairro" , bairr);
+                                                        XML.WriteAttributeString("Objeto" , obtp);
+                                                        XML.WriteAttributeString("Local"  , coor);
+                                   if (obtp == "Texto") XML.WriteAttributeString("Texto"  , txt);
                             XML.WriteEndElement();
         }
         public void         Rio_Fecha_Bairros ( List<XmlWriter> Lista_xml )               
@@ -1009,23 +1050,17 @@ namespace Rio
                             }
                             return L_arquivos;
        }
-
-
-
-
+     
 
 
 
         [CommandMethod("TESTE")]
-        public void TESTE()  
+        public void TESTE()                                      
         {
-                            List<Point3d> Lp = new List<Point3d>{new Point3d(10, 10, 0), new Point3d(20, 10, 0)};
-                            Cria_Texto(Lp, "0", "este texto");
 
         }
-
         [CommandMethod("seleccion")]
-        public void seleccion(Editor edi, Point3dCollection Lpts)
+        public void Seleccion(Editor edi, Point3dCollection Lpts)
         {
                Editor edoc = Application.DocumentManager.MdiActiveDocument.Editor;
                PromptSelectionResult resultado;
@@ -1040,9 +1075,8 @@ namespace Rio
                              Application.ShowAlertDialog("Number of objects selected: 0");
                   }
         }
-
         [CommandMethod("procesar")]
-        public void         Rio_Processa_DWGs ( ) 
+        public void Rio_Processa_DWGs ( )                        
         {
 
                      Point3dCollection Lp = new Point3dCollection { new Point3d(0, 0, 0), new Point3d(20, 0, 0), new Point3d(20, 20, 0), new Point3d(0, 20, 0) };
@@ -1051,17 +1085,17 @@ namespace Rio
                      Database dbside = new Database(false, true);
                      foreach (string arq in Arquivos)
                      {
-                                string   abrir = Pasta + arq;
+                                string abrir = Pasta + arq;
                                 using (dbside)
                                 {
                                        dbside.ReadDwgFile(abrir, FileOpenMode.OpenForReadAndWriteNoShare, true, "");
                                        Document doc = Application.DocumentManager.CurrentDocument;
                                        Editor   edi = doc.Editor;
-                                       seleccion(edi, Lp);
+                                       Seleccion(edi, Lp);
                                 }
                                 dbside.CloseInput(true);
                      }
                      dbside.Dispose();
         }
-      }
+     }
 }
