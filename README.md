@@ -23,4 +23,5 @@ Exemplo de um elemento:
         </outerBoundaryIs>
       </Polygon>
     </Placemark>
-    
+    ![Rio_782](https://user-images.githubusercontent.com/9437020/177427939-ee56905f-a8c6-4f8b-b844-afd67f9ca907.PNG)
+
