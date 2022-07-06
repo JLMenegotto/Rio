@@ -6,26 +6,10 @@ Os arquivos da série Rio_KML são estruturados para que possam ser abertos dire
 As coordenadas estão em formato Latitude e Longitude decimal.
 Exemplo de um elemento:
 
-<Placemark>
-      <name>5600</name>
-      <description>Prédios</description>
-      <visibility>1</visibility>
-      <Bairro_AP>2.0</Bairro_AP>
-      <Bairro_RA>V</Bairro_RA>
-      <Bairro_Nome>Copacabana</Bairro_Nome>
-      <Bairro_Zona>Copacabana</Bairro_Zona>
-      <Bairro_Codigo>024</Bairro_Codigo>
-      <Polygon>
-        <tessellate>1</tessellate>
-        <outerBoundaryIs>
-          <LinearRing>
-             <coordinates> -43.1769138575802, -22.9604190879071,0 -43.1770549735727,-22.9605928277586,0 
-                           -43.1771148217001, -22.9605511637856,0 -43.1769737056663,-22.9603774239845,0
-             </coordinates>
-          </LinearRing>
-        </outerBoundaryIs>
-      </Polygon>
-    </Placemark>
-    
+![ElementoKML](https://user-images.githubusercontent.com/9437020/177586913-eaae1e60-de09-4511-b8c5-5b372e03f1b8.PNG)
+
+
+Postes de Luz nos Bairros da Zona Sul do Rio de Janeiro
+
 ![Rio_782](https://user-images.githubusercontent.com/9437020/177427939-ee56905f-a8c6-4f8b-b844-afd67f9ca907.PNG)
 
