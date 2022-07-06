@@ -5,6 +5,7 @@ O projeto objetiva ter um repositório de dados que permita integrar bases de in
 Os arquivos da série Rio_KML são estruturados para que possam ser abertos diretamente em ambientes GIS como o QGIS ou o GoogleEarth. 
 As coordenadas estão em formato Latitude e Longitude decimal.
 Exemplo de um elemento:
+
 <Placemark>
       <name>5600</name>
       <description>Prédios</description>
@@ -23,5 +24,7 @@ Exemplo de um elemento:
         </outerBoundaryIs>
       </Polygon>
     </Placemark>
+    
+    
     ![Rio_782](https://user-images.githubusercontent.com/9437020/177427939-ee56905f-a8c6-4f8b-b844-afd67f9ca907.PNG)
 
