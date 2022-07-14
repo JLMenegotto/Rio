@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Cidade>
+<Cores>
+<Cor00>250 0 0</Cor00>
+<Cor01>250 250 250</Cor01>
+<Cor02>130 200 130</Cor02>
+<Cor03>240 230 180</Cor03>
+<Cor04>200 190 170</Cor04>
+<Cor05>220 250 190</Cor05>
+<Cor06>200 240 220</Cor06>
+<Cor07>220 220 220</Cor07>
+<Cor08>240 200 180</Cor08>
+<Cor09>100 210 250</Cor09>
+<Cor10>240 200 200</Cor10>
+<Cor11>100 150 100</Cor11>
+<Cor12>210 200 220</Cor12>
+<Cor13>200 200 200</Cor13>
+<Cor14>250 200 150</Cor14>
+<Cor15>255 245 200</Cor15>
+</Cores>
+<CorUsos>
+<_Setor>Cor00</_Setor>
+<_Quadra>Cor01</_Quadra>
+<_Lote>Cor15</_Lote>
+<_Predio>Cor13</_Predio>
+<_Indefinido>Cor14</_Indefinido>
+<_Setor>Cor00</_Setor>
+<_Passeio>Cor01</_Passeio>
+<_Verde>Cor02</_Verde>
+<_Lote>Cor15</_Lote>
+<_Verde>Cor02</_Verde>
+<_Habitacao>Cor03</_Habitacao>
+<_Governo>Cor04</_Governo>
+<_Educacao>Cor05</_Educacao>
+<_Comercio>Cor06</_Comercio>
+<_Industria>Cor07</_Industria>
+<_Saude>Cor08</_Saude>
+<_Cultura>Cor09</_Cultura>
+<_Seguridade>Cor10</_Seguridade>
+<_Militar>Cor11</_Militar>
+<_Religiao>Cor12</_Religiao>
+<_Verde>Cor02</_Verde>
+<_Misto>Cor13</_Misto>
+<_Lote>Cor15</_Lote>
+</CorUsos>
+<Estados>
+<Est01>Novo</Est01>
+<Est02>Em obras</Est02>
+<Est03>Tombado</Est03>
+<Est04>Tombado ruina</Est04>
+<Est05>Abandonado</Est05>
+<Est06>Embargado</Est06>
+<Est07>Em litigio</Est07>
+<Est08>Bom</Est08>
+<Est09>Regular</Est09>
+<Est10>Ruina</Est10>
+</Estados>
+<Tipos>
+<Tipo01>Descritivo</Tipo01>
+<Tipo02>Descritivo</Tipo02>
+<Tipo03>Descritivo</Tipo03>
+<Tipo04>Descritivo</Tipo04>
+<Tipo05>Descritivo</Tipo05>
+</Tipos>
+<Donos>
+<Prp01>Publico</Prp01>
+<Prp02>Privado</Prp02>
+<Prp03>Diplomatico</Prp03>
+<Prp04>Internacional</Prp04>
+</Donos>
+<ElementosUrbanos>
+<Bairro>
+<Bairro_Nome>Leblon</Bairro_Nome>
+<Setor>
+<Setor_CodS>S19</Setor_CodS>
+<Setor_Area>76935.12</Setor_Area>
+<Setor_Limi>155633 19341 0 154526 25175 0 150905 25175 0 149718 24895 0 142067 23980 0 134022 23205 0 128635 22555 0 123027 21978 0 112186 20723 0 104859 19976 0 97606 19099 0 90318 17895 0 82578 16777 0 73911 15271 0 64794 13724 0 57337 12445 0 50104 10519 0 43147 7726 0 36438 4926 0 29417 1785 0 28116 1174 0 28116 -3379 0 32265 -3379 0 48611 3636 0 84427 11842 0 </Setor_Limi>
+<Setor_Qdrs>7</Setor_Qdrs>
+<Quadra>
+<Quadra_Codi>S19-Q2</Quadra_Codi>
+<Quadra_CodS>S19</Quadra_CodS>
+<Quadra_CodQ>Q2</Quadra_CodQ>
+<Quadra_Usos>_Verde</Quadra_Usos>
+<Quadra_Area>12.31</Quadra_Area>
+<Quadra_Limi>153125 24572 25 153644 24629 25 153663 24454 25 152784 24358 25 </Quadra_Limi>
+<Quadra_Ltes>0</Quadra_Ltes>
+<Quadra_Mfio>25</Quadra_Mfio>
+</Quadra>
+<Quadra>
+<Quadra_Codi>S19-Q1</Quadra_Codi>
+<Quadra_CodS>S19</Quadra_CodS>
+<Quadra_CodQ>Q1</Quadra_CodQ>
+<Quadra_Usos>_Verde</Quadra_Usos>
+<Quadra_Area>71.11</Quadra_Area>
+<Quadra_Limi>29170 1072 25 28379 710 25 28255 154 25 28360 -17 25 29496 534 25 29250 890 25 </Quadra_Limi>
+<Quadra_Ltes>0</Quadra_Ltes>
+<Quadra_Mfio>25</Quadra_Mfio>
+</Quadra>
+<Quadra>
+<Quadra_Codi>S19-Q6</Quadra_Codi>
+<Quadra_CodS>S19</Quadra_CodS>
+<Quadra_CodQ>Q6</Quadra_CodQ>
+<Quadra_Usos>_Verde</Quadra_Usos>
+<Quadra_Area>943.99</Quadra_Area>
+<Quadra_Limi>34240 2882 25 37118 4192 25 42811 6625 25 44409 7253 25 44861 7431 25 48217 8776 25 50887 9759 25 53009 10447 25 54018 10716 25 55333 11047 25 57165 11447 25 60207 11971 25 65131 12820 25 73347 14189 25 76259 14673 25 76644 14914 25 73319 14362 25 65102 12992 25 60177 12144 25 57131 11619 25 55293 11217 25 53974 10886 25 52959 10615 25 50830 9924 25 48154 8940 25 44797 7594 25 44345 7416 25 42745 6787 25 37047 4352 25 33938 2937 25 33623 3070 25 30488 1692 25 30376 1557 25 30358 1414 25 30466 1270 25 30668 1264 25 </Quadra_Limi>
+<Quadra_Ltes>0</Quadra_Ltes>
+<Quadra_Mfio>25</Quadra_Mfio>
+</Quadra>
+<Quadra>
+<Quadra_Codi>S19-Q4</Quadra_Codi>
+<Quadra_CodS>S19</Quadra_CodS>
+<Quadra_CodQ>Q4</Quadra_CodQ>
+<Quadra_Usos>_Verde</Quadra_Usos>
+<Quadra_Area>897.17</Quadra_Area>
+<Quadra_Limi>96865 18128 25 105317 19164 25 110570 19753 25 117114 20495 25 131053 21970 25 133518 22241 25 133455 22410 25 131035 22144 25 117095 20669 25 110551 19927 25 105297 19338 25 96840 18302 25 88028 16861 25 82872 15973 25 82481 15728 25 88057 16689 25 </Quadra_Limi>
+<Quadra_Ltes>0</Quadra_Ltes>
+<Quadra_Mfio>25</Quadra_Mfio>
+</Quadra>
+<Quadra>
+<Quadra_Codi>S19-Q5</Quadra_Codi>
+<Quadra_CodS>S19</Quadra_CodS>
+<Quadra_CodQ>Q5</Quadra_CodQ>
+<Quadra_Usos>_Verde</Quadra_Usos>
+<Quadra_Area>270.84</Quadra_Area>
+<Quadra_Limi>142773 23258 25 150722 24131 25 151062 24345 25 142754 23433 25 135402 22624 25 135632 22473 25 </Quadra_Limi>
+<Quadra_Ltes>0</Quadra_Ltes>
+<Quadra_Mfio>25</Quadra_Mfio>
+</Quadra>
+<Quadra>
+<Quadra_Codi>S19-Q3</Quadra_Codi>
+<Quadra_CodS>S19</Quadra_CodS>
+<Quadra_CodQ>Q3</Quadra_CodQ>
+<Quadra_Usos>_Verde</Quadra_Usos>
+<Quadra_Area>9386.11</Quadra_Area>
+<Quadra_Limi>30599 -932 25 30410 -859 25 30252 -724 25 30137 -508 25 30189 -160 25 30341 48 25 31082 391 25 37505 3313 25 43176 5737 25 44760 6359 25 45216 6539 25 48562 7880 25 51201 8851 25 53281 9526 25 54259 9787 25 55553 10112 25 57349 10504 25 60370 11025 25 65291 11873 25 73505 13242 25 79144 14179 25 88216 15742 25 97001 17177 25 105429 18210 25 110678 18799 25 117219 19540 25 131156 21015 25 142878 22304 25 153768 23500 25 153757 23599 25 142867 22403 25 131146 21114 25 117208 19639 25 110667 18898 25 105418 18309 25 96987 17276 25 88200 15840 25 79128 14277 25 73489 13340 25 65275 11971 25 60353 11123 25 57330 10602 25 55530 10209 25 54234 9883 25 53253 9621 25 51169 8945 25 48526 7973 25 45179 6631 25 44724 6452 25 43138 5829 25 37465 3404 25 31041 482 25 29960 1 25 29715 -227 25 29586 -511 25 29582 -844 25 29938 -1607 25 32490 -446 25 32710 -927 25 29924 -2226 25 29692 -1850 25 29467 -1736 25 29127 -1090 25 28824 -968 25 28641 -1000 25 28362 -1133 25 29210 -2812 25 31014 -1987 25 32908 -1121 25 32412 82 25 37830 2582 25 43479 4997 25 45053 5615 25 45511 5795 25 46163 6056 25 46313 5728 25 47407 5040 25 47665 6309 25 47545 6611 25 48849 7133 25 51463 8095 25 53508 8758 25 54460 9012 25 55736 9333 25 57502 9719 25 60506 10237 25 65425 11084 25 73637 12453 25 79278 13390 25 88349 14953 25 97114 16385 25 105523 17416 25 110768 18004 25 117306 18745 25 119800 19009 25 119809 18831 25 120636 17834 25 121270 18961 25 121248 19162 25 131242 20220 25 142965 21509 25 153855 22705 25 153789 23301 25 142899 22105 25 131178 20816 25 117240 19341 25 110700 18600 25 105453 18012 25 97029 16979 25 88249 15545 25 79178 13982 25 73538 13045 25 65325 11676 25 60404 10828 25 57387 10308 25 55598 9917 25 54309 9593 25 53338 9334 25 51267 8662 25 48633 7693 25 45289 6353 25 44833 6173 25 43252 5552 25 37586 3130 25 32267 673 25 31502 -597 25 30785 -926 25 </Quadra_Limi>
+<Quadra_Ltes>0</Quadra_Ltes>
+<Quadra_Mfio>25</Quadra_Mfio>
+</Quadra>
+<Quadra>
+<Quadra_Codi>S19-Q7</Quadra_Codi>
+<Quadra_CodS>S19</Quadra_CodS>
+<Quadra_CodQ>Q7</Quadra_CodQ>
+<Quadra_Usos>_Verde</Quadra_Usos>
+<Quadra_Area>44.91</Quadra_Area>
+<Quadra_Limi>31216 123 25 30514 -174 25 30437 -321 25 30453 -456 25 30516 -582 25 30638 -624 25 31307 -422 25 31373 -348 25 31414 -268 25 </Quadra_Limi>
+<Quadra_Ltes>0</Quadra_Ltes>
+<Quadra_Mfio>25</Quadra_Mfio>
+</Quadra>
+</Setor>
+</Bairro>
+</ElementosUrbanos>
+</Cidade>
