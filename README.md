@@ -1,4 +1,5 @@
 # Rio
+![Rio_782](https://user-images.githubusercontent.com/9437020/177427939-ee56905f-a8c6-4f8b-b844-afd67f9ca907.PNG)
 O projeto Rio trata de um sistema programado para extrair e re-estruturar dados em formato XML dos arquivos DWG da cidade de Rio de Janeiro. 
 O projeto objetiva ter um repositório de dados que permita integrar bases de informação existentes em DWG com aplicações BIM direcionadas para o projeto urbano. 
 
