@@ -12,10 +12,10 @@ Os arquivos da série Rio_KML são estruturados para que possam ser abertos dire
 ### Exemplo de um elemento:
 ![ElementoKML](https://user-images.githubusercontent.com/9437020/177586913-eaae1e60-de09-4511-b8c5-5b372e03f1b8.PNG)
 
+[**Mais informações sobre o projeto**](https://jlmenegotto.wixsite.com/jlmenegotto-bim/bim-urbano)
+
 ### Postes de Luz nos Bairros da Zona Sul do Rio de Janeiro
 ![Rio_782](https://user-images.githubusercontent.com/9437020/177427939-ee56905f-a8c6-4f8b-b844-afd67f9ca907.PNG)
-
-[**Mais informações sobre o projeto**](https://jlmenegotto.wixsite.com/jlmenegotto-bim/bim-urbano)
 
 ## 
 [**Canal YouTube:** Videos com explicação dos conteúdos e metodologias das funções](https://www.youtube.com/channel/UCCN58u2BP38F09aswlJrILA)
