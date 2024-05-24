@@ -5,6 +5,8 @@
 + <sub> _PPE Programa de Pós-graduação em Estruturas_</sub>
 ## 
 
+O projeto Rio trata da reorganização dos dados digitalizados e presentes nos acervos digitais. Específicamente se trataram dados da base de informação gráfica da cidade do Rio de Janeiro produzida em AutoCAD durante a década de 90. Os arquivos foram processados para extrair e formatar os dados em arquivos XML que posteriormente foram leídos por macros C# em Revit para criar o modelo urbano dos bairros da cidade em LOD100.  
+
 ### Postes de Luz nos Bairros da Zona Sul do Rio de Janeiro
 ![Rio_782](https://user-images.githubusercontent.com/9437020/177427939-ee56905f-a8c6-4f8b-b844-afd67f9ca907.PNG)
 
