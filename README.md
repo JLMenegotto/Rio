@@ -8,7 +8,7 @@
 O projeto Rio trata da reorganização dos dados digitalizados e presentes nos acervos digitais.  
 Neste projeto se trataram específicamente os dados contidos na base de informação gráfica da cidade do Rio de Janeiro, produzida em AutoCAD durante a década de 90. Os arquivos do acervo foram processados para extrair e formatar os dados em arquivos XML, para posteriormente, ser leídos por macros C# em Revit. Desse modo se transferem do AutoCAD para Revit o modelo urbano dos bairros da cidade em LOD100 e os dados que podem ser aproveitados. O projeto objetiva ter um repositório de dados que permita integrar bases de informação existentes em DWG com aplicações BIM direcionadas para o projeto urbano. 
 
-O projeto passou por duas fases. Na primeira os dados foram ordenados em arquivos XML com uma semántica própria.
+O projeto passou por duas fases. Na primeira, representada nos arquivos do bairro Leblon, os dados foram ordenados em formato XML com uma semántica própria.  
 A segunda fase, correspondente aos arquivos da série Rio_KML, passou a utilizar a semántica específica do formato KML, o que permite que os arquivos possam ser lidos em aplicações GIS como ArcGIS, QGIS ou diretamente no Google Earth.   
   
 As coordenadas estão em formato Latitude e Longitude decimal. 
